@@ -14,6 +14,11 @@
     var setColor = function(questionId, color) {
         document.querySelector(`#readme a[href*="/${questionId}/"]`).style.color = color;
     };
+
+    var showVoteCount = function(questionId, score) {
+        document.querySelector(`#readme a[href*="/${questionId}/"]`).insertAdjacentHTML('beforebegin', `<span style="color: gray;" title="Score"> ${score} </span>`);
+    };
+
     var sendRequest = function(ids) {
         GM_xmlhttpRequest({
             method: "GET",
@@ -26,7 +31,12 @@
                 questions.forEach(function(question) {
                     var hoursSinceClosed = Math.abs(now - +new Date(question.closed_date * 1000)) / 36e5;
 
-                    setColor(question.question_id, (hoursSinceClosed >= 48 || question.score <= -3) ? 'green' : 'red');
+                    if (hoursSinceClosed >= 48 || question.score <= -3) {
+                        setColor(question.question_id, 'green');
+                    } else {
+                        setColor(question.question_id, 'red');
+                        showVoteCount(question.question_id, question.score);
+                    }
                 });
             }
         });
