@@ -11,12 +11,24 @@
 (function() {
     'use strict';
 
+    var getElementByQuestionId = function(questionId) {
+        return document.querySelector(`#readme a[href*="/${questionId}/"]`);
+    };
+
     var setColor = function(questionId, color) {
-        document.querySelector(`#readme a[href*="/${questionId}/"]`).style.color = color;
+        getElementByQuestionId(questionId).style.color = color;
     };
 
     var showVoteCount = function(questionId, score) {
-        document.querySelector(`#readme a[href*="/${questionId}/"]`).insertAdjacentHTML('beforebegin', `<span style="color: gray;" title="Score"> ${score} </span>`);
+        getElementByQuestionId(questionId).insertAdjacentHTML('beforebegin', `<span style="color: gray;" title="Score"> ${score} </span>`);
+    };
+
+    var setTitle = function(questionId, title) {
+        getElementByQuestionId(questionId).innerHTML = title;
+    };
+
+    var openInNewTab = function(questionId) {
+        getElementByQuestionId(questionId).setAttribute('target', '_blank');
     };
 
     var sendRequest = function(ids) {
@@ -29,13 +41,16 @@
                 var now = +new Date();
 
                 questions.forEach(function(question) {
+                    var questionId = question.question_id;
                     var hoursSinceClosed = Math.abs(now - +new Date(question.closed_date * 1000)) / 36e5;
 
+                    setTitle(questionId, question.title);
+                    openInNewTab(questionId);
                     if (hoursSinceClosed >= 48 || question.score <= -3) {
-                        setColor(question.question_id, 'green');
+                        setColor(questionId, 'green');
                     } else {
-                        setColor(question.question_id, 'red');
-                        showVoteCount(question.question_id, question.score);
+                        setColor(questionId, 'red');
+                        showVoteCount(questionId, question.score);
                     }
                 });
             }
