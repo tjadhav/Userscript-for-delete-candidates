@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Red-Green-Blue for Delete Candidates
 // @namespace    https://github.com/tusharjadhav219/Userscript-for-delete-candidates
-// @version      0.21
+// @version      0.3
 // @description  For https://gist.github.com/sotodel/0a2d92faa6c08192efed94fd4044a9cc.
 // @author       Tushar
 // @match        https://gist.github.com/sotodel/*
@@ -34,7 +34,9 @@
                     var style = {};
                     var $el = $(`#readme a[href*="/${questionId}/"]`);
 
-                    if (hoursSinceClosed >= 48 || question.score <= -3) {
+                    if (question.closed_date === undefined) {
+                        $el.css('color', 'gray').before(`<span style="color: red; font-weight: bold">[Reopened] </span>`);
+                    } else if (hoursSinceClosed >= 48 || question.score <= -3) {
                         style = {
                             'font-weight': 'bold',
                             'font-style': 'italic',
@@ -44,7 +46,7 @@
                         style = {
                             'color': 'red'
                         };
-                        $el.before(`<span style="color: gray;" title="Score"> ${question.score} </span>|<span style="color: gray;" title="Hours remaining"> ~${48 - Math.ceil(hoursSinceClosed)} hr. </span>`);
+                        $el.before(`<span style="color: gray;" title="Score">[${question.score} </span>|<span style="color: gray;" title="Hours remaining"> ~${48 - Math.ceil(hoursSinceClosed)} hr.] </span>`);
                     }
 
                     $el.css(style).text(question.title).addClass('deleteable');
