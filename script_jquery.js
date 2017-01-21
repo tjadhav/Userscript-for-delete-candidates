@@ -1,11 +1,13 @@
 // ==UserScript==
 // @name         Red-Green-Blue for Delete Candidates
 // @namespace    http://tampermonkey.net/
-// @version      0.1
+// @version      0.2
 // @description  For https://gist.github.com/sotodel/0a2d92faa6c08192efed94fd4044a9cc.
 // @author       Tushar
 // @match        https://gist.github.com/sotodel/*
 // @require      https://code.jquery.com/jquery-2.2.4.min.js
+// @downloadURL  https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
+// @updateURL    https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
 // @grant        GM_xmlhttpRequest
 // ==/UserScript==
 
@@ -42,10 +44,10 @@
                         style = {
                             'color': 'red'
                         };
-                        $el.before(`<span style="color: gray;" title="Score"> ${question.score} </span>`);
+                        $el.before(`<span style="color: gray;" title="Score"> ${question.score} </span>|<span style="color: gray;" title="Hours remaining"> ~${48 - Math.ceil(hoursSinceClosed)} hr. </span>`);
                     }
 
-                    $el.css(style).text(question.title);
+                    $el.css(style).text(question.title).addClass('deleteable');
                 });
 
                 $(`#readme a[href*="${ids.join('"], #readme a[href*="')}"]`).not(`#readme a[href*="${questionIds.join('"], #readme a[href*="')}"]`).css({
