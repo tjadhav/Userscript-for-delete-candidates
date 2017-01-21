@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         Red-Green-Blue for Delete Candidates
-// @namespace    http://tampermonkey.net/
-// @version      0.2
+// @namespace    https://github.com/tusharjadhav219/Userscript-for-delete-candidates
+// @version      0.21
 // @description  For https://gist.github.com/sotodel/0a2d92faa6c08192efed94fd4044a9cc.
 // @author       Tushar
 // @match        https://gist.github.com/sotodel/*
