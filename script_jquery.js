@@ -1,18 +1,32 @@
 // ==UserScript==
 // @name         Red-Green-Blue for Delete Candidates
 // @namespace    https://github.com/tusharjadhav219/Userscript-for-delete-candidates
-// @version      0.3
+// @version      0.4
 // @description  For https://gist.github.com/sotodel/0a2d92faa6c08192efed94fd4044a9cc.
 // @author       Tushar
 // @match        https://gist.github.com/sotodel/*
 // @require      https://code.jquery.com/jquery-2.2.4.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.plugin.min.js
+// @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.js
 // @downloadURL  https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
 // @updateURL    https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
 // @grant        GM_xmlhttpRequest
+// @grant        GM_log
 // ==/UserScript==
 
 (function() {
     'use strict';
+
+    var startCountdown = function(el, remainingTime) {
+        el.countdown({
+            until: remainingTime,
+            format: 'H:M:S',
+            compact: true,
+            onExpiry: function() {
+                window.location.reload();
+            }
+        });
+    };
 
     // Open all links in new tab
     $('#readme a[href*="stackoverflow.com"]').attr('target', '_blank');
@@ -30,7 +44,8 @@
                 questions.forEach(function(question) {
                     var questionId = question.question_id;
                     questionIds.push(questionId);
-                    var hoursSinceClosed = Math.abs(now - +new Date(question.closed_date * 1000)) / 36e5;
+                    var questionClosedDate = new Date(question.closed_date * 1000);
+                    var hoursSinceClosed = Math.abs(now - +questionClosedDate) / 36e5;
                     var style = {};
                     var $el = $(`#readme a[href*="/${questionId}/"]`);
 
@@ -46,7 +61,10 @@
                         style = {
                             'color': 'red'
                         };
-                        $el.before(`<span style="color: gray;" title="Score">[${question.score} </span>|<span style="color: gray;" title="Hours remaining"> ~${48 - Math.ceil(hoursSinceClosed)} hr.] </span>`);
+                        $el.before(`[<span style="color: gray;" title="Score">${question.score} </span>| <span class="countdown" style="color: gray;" title="Time remaining">~${48 - Math.ceil(hoursSinceClosed)} </span>] `);
+
+                        questionClosedDate.setHours(questionClosedDate.getHours() + 48);
+                        startCountdown($el.prev('.countdown'), questionClosedDate);
                     }
 
                     $el.css(style).text(question.title).addClass('deleteable');
