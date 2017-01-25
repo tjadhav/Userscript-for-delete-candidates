@@ -5,4 +5,8 @@ This is to keep track of delete-able posts.
 
 # Installation:
 
-Install Tampermonkey/Greasemonkey and install this script. Done!
+Install Tampermonkey/Greasemonkey.
+
+Open the file in [Raw](https://github.com/tusharjadhav219/Userscript-for-delete-candidates/raw/master/script_jquery.user.js) mode and click Install/Update.
+
+Done!!!
