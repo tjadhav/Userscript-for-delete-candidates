@@ -8,10 +8,9 @@
 // @require      https://code.jquery.com/jquery-2.2.4.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.plugin.min.js
 // @require      https://cdnjs.cloudflare.com/ajax/libs/jquery-countdown/2.0.2/jquery.countdown.js
-// @downloadURL  https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
-// @updateURL    https://raw.githubusercontent.com/tusharjadhav219/Userscript-for-delete-candidates/master/script_jquery.js
+// @downloadURL  https://github.com/tusharjadhav219/Userscript-for-delete-candidates/raw/master/script_jquery.user.js
+// @updateURL    https://github.com/tusharjadhav219/Userscript-for-delete-candidates/raw/master/script_jquery.user.js
 // @grant        GM_xmlhttpRequest
-// @grant        GM_log
 // ==/UserScript==
 
 (function() {
