@@ -66,7 +66,7 @@
                         startCountdown($el.prev('.countdown'), questionClosedDate);
                     }
 
-                    $el.css(style).text(question.title).addClass('deleteable');
+                    $el.css(style).html(question.title).addClass('deleteable');
                 });
 
                 $(`#readme a[href*="${ids.join('"], #readme a[href*="')}"]`).not(`#readme a[href*="${questionIds.join('"], #readme a[href*="')}"]`).css({
